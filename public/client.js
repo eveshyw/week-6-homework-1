@@ -108,10 +108,11 @@ document.addEventListener('DOMContentLoaded',function() {
     const topTracksContainer = document.getElementById("top-tracks-container");
     data
       .forEach((artist) => {
+          topTracksContainer.insertAdjacentHTML('beforeend', `<ol id="${artist.name}">${artist.name}</ol>`);
         // Display the top tracks
+        var listContainer = document.getElementById(`${artist.name}`);
         artist.data.tracks.map(function(track, i) {
-          artistContainer.insertAdjacentHTML('beforeend', `<h3>${artist.data.name}</h3>`);
-          topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }</li>`);
+          listContainer.insertAdjacentHTML('beforeend', `<li>${track.name }</li>`);
         });
     })
     

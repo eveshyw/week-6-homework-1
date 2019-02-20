@@ -177,8 +177,8 @@ app.get('/artist', function (request, response) {
 app.get('/artist-top-tracks', function (request, response) {
    
   // Build a collection of artists
-  let artists = [{id:"0LcJLqbBmaGUft1e9Mm8HV",country:"SE"}, 
-                 {id:"1EowJ1WwkMzkCkRomFhui7",country:"JP"}];
+  let artists = [{id:"0LcJLqbBmaGUft1e9Mm8HV",country:"SE",name:"ABBA"}, 
+                 {id:"1EowJ1WwkMzkCkRomFhui7",country:"JP",name:"RADWIMPS"}];
     // Get data
   artists.forEach((artist) => {
     spotifyApi.getArtistTopTracks(`${artist.id}`, `${artist.country}`)
