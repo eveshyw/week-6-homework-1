@@ -22,7 +22,7 @@ $(function() {
     
     let h5 = document.createElement('h5');
     h5.innerText = artists;
-    document.getElementById('search-track-container').append(h5);
+    searchTrackContainer.append(h5);
     
     // Display the album art
     searchTrackContainer.insertAdjacentHTML('beforeend', `<img src="${data.album.images[0].url}"/>`);
@@ -34,16 +34,20 @@ $(function() {
     console.log(data);
     console.groupEnd();
     
+    const categoryPlaylistsContainer = document.getElementById("category-playlists-container");
+    
     // Display the covers of the playlists
     data
       .forEach((c) => {
-      $('#category-playlists-container').append(`<br><h1>${c.name}</h1><br>`)
-      c.data.playlists.items.map(function(playlist, i) {
-      var img = $('<img class="cover-image"/>');
-      img.attr('src', playlist.images[0].url);
-      img.appendTo('#category-playlists-container');
-    });
-    })
+        categoryPlaylistsContainer.insertAdjacentHTML('beforeend', `<br><h1>${c.name}</h1><br>`);
+        $('#category-playlists-container').append(`<br><h1>${c.name}</h1><br>`)
+        c.data.playlists.items.map(function(playlist, i) {
+          var img = $('<img class="cover-image"/>');
+          img.attr('src', playlist.images[0].url);
+          img.appendTo('#category-playlists-container');
+          categoryPlaylistsContainer.insertAdjacentHTML('beforeend', `<img class="cover-image" src="${playlist.album.images[0].url}"/>`);
+        });
+      })
   });
   
   fetch('/audio-features').then(resp => resp.json()).then((data) => {
@@ -64,7 +68,7 @@ $(function() {
     });
   });
   
-  /audio-features$.get('/artist', function(data) {
+  fetch('/artist').then(resp => resp.json()).then((data) => {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
     console.group('%cResponse from /artist', 'color: #F037A5; font-size: large');
     console.log(data);
@@ -86,7 +90,7 @@ $(function() {
     });
   });
   
-  $.get('/artist-top-tracks', function(data) {
+  fetch('/artist-top-tracks').then(resp => resp.json()).then((data) => {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
     console.group('%cResponse from /artist-top-tracks', 'color: #F037A5; font-size: large');
     console.log(data);
