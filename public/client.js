@@ -1,7 +1,7 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
-$(function() {
+document.addEventListener('DOMContentLoaded',function() {
     
   fetch('/search-track').then(resp => resp.json()).then((data) => {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
@@ -96,10 +96,8 @@ $(function() {
     const topTracksContainer = document.getElementById("top-tracks-container");roupEnd();
     
     // Display the audio features
-    data.map(function(track, i) {
-      var trackName = $('<li>' + track.name + '</li>');
-      trackName.appendTo('#top-tracks-co
-      topTracksContainer.insertAdjacentHTML('beforeend', `<p>${genre}<p/>`);ntainer');
+    data.map(function(t
+      topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }<li/>`);ntainer');
     });
   });
 
