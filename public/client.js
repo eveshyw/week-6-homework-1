@@ -60,9 +60,7 @@ document.addEventListener('DOMContentLoaded',function() {
     // Display the audio features
     keys.map(function(key, i) {
       if (data.hasOwnProperty(key)) {
-        var feature = $('<p><span class="big-number">' + data[key] + ' </span>'  + key + '</p>');
-        feature.appendTo('#audio-features-container');
-                //audioFeaturesContainer.insertAdjacentHTML('beforeend', `<p><span class="big-number"> ${data[key]} </span> ${key}</p>`);
+        audioFeaturesContainer.insertAdjacentHTML('beforeend', `<p><span class="big-number"> ${data[key]} </span> ${key}</p>`);
       }
     });
   });
@@ -71,19 +69,19 @@ document.addEventListener('DOMContentLoaded',function() {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
     console.group('%cResponse from /artist', 'color: #F037A5; font-size: large');
     console.log(data);
-    console.g
+    console.groupEnd();
     
-    const artistContainer = document.getElementById("artist-container");roupEnd();
+    const artistContainer = document.getElementById("artist-container");
     
-    // Display the arti
-    artistContainer.insertAdjacentHTML('beforeend', `<img class="circle-image" src="${data.images[0].url}"/>`);ntainer');
+    // Display the artist image
+    artistContainer.insertAdjacentHTML('beforeend', `<img class="circle-image" src="${data.images[0].url}"/>`);
     
-    // Display the a
-    artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}<h3/>`);ntainer');
+    // Display the artist name
+    artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}<h3/>`);
     
     // Display the artist's genres
-    data.genres.map(function(g
-      artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}<p/>`);ntainer');
+    data.genres.map(function(genre, i) {
+      artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}<p/>`);
     });
   });
   
@@ -91,13 +89,13 @@ document.addEventListener('DOMContentLoaded',function() {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
     console.group('%cResponse from /artist-top-tracks', 'color: #F037A5; font-size: large');
     console.log(data);
-    console.g
+    console.groupEnd();
     
-    const topTracksContainer = document.getElementById("top-tracks-container");roupEnd();
+    const topTracksContainer = document.getElementById("top-tracks-container");
     
     // Display the audio features
-    data.map(function(t
-      topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }<li/>`);ntainer');
+    data.map(function(track, i) {
+      topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }<li/>`);
     });
   });
 
