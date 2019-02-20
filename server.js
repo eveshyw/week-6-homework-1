@@ -48,10 +48,10 @@ spotifyApi.clientCredentialsGrant()
 
 app.get('/search-track', function (request, response) {
   // Build a collection of tracks
-  let tracks = ["proud of u", "bartender"];
+  let tracks = [{name:"proud of u"}, {name:"bartender"}];
     // Get the playlists for the given category for each country
   tracks.forEach((track) => {
-    spotifyApi.searchTracks(`track:${track}`, {limit: 1})
+    spotifyApi.searchTracks(`track:${track.name}`, {limit: 1})
       .then((data) => {
         // Persist the data on this  object
         track.data = data.body;

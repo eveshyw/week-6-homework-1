@@ -11,21 +11,27 @@ document.addEventListener('DOMContentLoaded',function() {
     
     // Display the track name
     const searchTrackContainer = document.getElementById("search-track-container");
-    searchTrackContainer.insertAdjacentHTML('beforeend', `<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`);
     
-    // Display the artist name
-    var artists = '';
+    data
+      .forEach((t) => {
+        searchTrackContainer.insertAdjacentHTML('beforeend', `<h3><a href="${t.data.tracks.items[0].external_urls.spotify}">${t.name}</a></h3>`);
     
-    data.artists.forEach(function(item) {
-      artists = artists + item.name + ' ';
-    });
-    
-    let h5 = document.createElement('h5');
-    h5.innerText = artists;
-    searchTrackContainer.append(h5);
-    
-    // Display the album art
-    searchTrackContainer.insertAdjacentHTML('beforeend', `<img src="${data.album.images[0].url}"/>`);
+        // Display the artist name
+        var artists = '';
+
+        t.artists.forEach(function(item) {
+          artists = artists + item.name + ' ';
+        });
+
+        let h5 = document.createElement('h5');
+        h5.innerText = artists;
+        searchTrackContainer.append(h5);
+
+        // Display the album art
+        searchTrackContainer.insertAdjacentHTML('beforeend', `<img src="${t.data.album.images[0].url}"/>`);
+      })
+  
+
   });
   
   fetch('/category-playlists').then(resp => resp.json()).then((data) => {
