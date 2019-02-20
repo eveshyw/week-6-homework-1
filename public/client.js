@@ -62,7 +62,7 @@ $(function() {
       if (data.hasOwnProperty(key)) {
         var feature = $('<p><span class="big-number">' + data[key] + ' </span>'  + key + '</p>');
         feature.appendTo('#audio-features-container');
-        //audioFeaturesContainer.insertAdjacentHTML('beforeend', `<p><span class="big-number"> ${data[key]} </span> ${key}</p>`);
+                //audioFeaturesContainer.insertAdjacentHTML('beforeend', `<p><span class="big-number"> ${data[key]} </span> ${key}</p>`);
       }
     });
   });
@@ -71,21 +71,19 @@ $(function() {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
     console.group('%cResponse from /artist', 'color: #F037A5; font-size: large');
     console.log(data);
-    console.groupEnd();
+    console.g
     
-    // Display the artist's image
-    var img = $('<img class="circle-image" />');
-    img.attr('src', data.images[0].url);
-    img.appendTo('#artist-container');
+    const artistContainer = document.getElementById("artist-container");roupEnd();
     
-    // Display the artist name
-    var trackName = $('<h3>' + data.name + '</h3>');
-    trackName.appendTo('#artist-container');
+    // Display the arti
+    artistContainer.insertAdjacentHTML('beforeend', `<img class="circle-image" src="${data.images[0].url}"/>`);ntainer');
+    
+    // Display the a
+    artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}<h3/>`);ntainer');
     
     // Display the artist's genres
-    data.genres.map(function(genre, i) {
-      var genreItem = $('<p>' + genre + '</p>');
-      genreItem.appendTo('#artist-container');
+    data.genres.map(function(g
+      artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}<p/>`);ntainer');
     });
   });
   
@@ -93,12 +91,15 @@ $(function() {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
     console.group('%cResponse from /artist-top-tracks', 'color: #F037A5; font-size: large');
     console.log(data);
-    console.groupEnd();
+    console.g
+    
+    const topTracksContainer = document.getElementById("top-tracks-container");roupEnd();
     
     // Display the audio features
     data.map(function(track, i) {
       var trackName = $('<li>' + track.name + '</li>');
-      trackName.appendTo('#top-tracks-container');
+      trackName.appendTo('#top-tracks-co
+      topTracksContainer.insertAdjacentHTML('beforeend', `<p>${genre}<p/>`);ntainer');
     });
   });
 
