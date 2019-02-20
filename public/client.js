@@ -40,12 +40,8 @@ $(function() {
     data
       .forEach((c) => {
         categoryPlaylistsContainer.insertAdjacentHTML('beforeend', `<br><h1>${c.name}</h1><br>`);
-        $('#category-playlists-container').append(`<br><h1>${c.name}</h1><br>`)
         c.data.playlists.items.map(function(playlist, i) {
-          var img = $('<img class="cover-image"/>');
-          img.attr('src', playlist.images[0].url);
-          img.appendTo('#category-playlists-container');
-          categoryPlaylistsContainer.insertAdjacentHTML('beforeend', `<img class="cover-image" src="${playlist.album.images[0].url}"/>`);
+          categoryPlaylistsContainer.insertAdjacentHTML('beforeend', `<img class="cover-image" src="${playlist.images[0].url}"/>`);
         });
       })
   });
@@ -56,6 +52,8 @@ $(function() {
     console.log(data);
     console.groupEnd();
     
+    const audioFeaturesContainer = document.getElementById("audio-features-container");
+    
     // The audio features we want to show
     var keys = ["danceability", "energy", "acousticness", "speechiness", "loudness"]
     
@@ -64,6 +62,7 @@ $(function() {
       if (data.hasOwnProperty(key)) {
         var feature = $('<p><span class="big-number">' + data[key] + ' </span>'  + key + '</p>');
         feature.appendTo('#audio-features-container');
+        //audioFeaturesContainer.insertAdjacentHTML('beforeend', `<p><span class="big-number"> ${data[key]} </span> ${key}</p>`);
       }
     });
   });
