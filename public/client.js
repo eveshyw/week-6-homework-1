@@ -14,6 +14,8 @@ $(function() {
       // '<h3><a href="' + data.external_urls.spotify + '" target="blank">' + data.name + '</a></h3>'
       `<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`
     );
+    const searchTrackContainer = document.getElementById("search-track-container");
+    searchTrackContainer.insertAdjacentHTML('beforeend', `<p class="comment">${commentContent}</p>`);
     trackName.appendTo('#search-track-container');
     
     // Display the artist name
