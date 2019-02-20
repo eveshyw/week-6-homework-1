@@ -77,11 +77,11 @@ document.addEventListener('DOMContentLoaded',function() {
     artistContainer.insertAdjacentHTML('beforeend', `<img class="circle-image" src="${data.images[0].url}"/>`);
     
     // Display the artist name
-    artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}<h3/>`);
+    artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}</h3>`);
     
     // Display the artist's genres
     data.genres.map(function(genre, i) {
-      artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}<p/>`);
+      artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}</p>`);
     });
   });
   
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded',function() {
     
     // Display the audio features
     data.map(function(track, i) {
-      topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }<li/>`);
+      topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }</li>`);
     });
   });
 
