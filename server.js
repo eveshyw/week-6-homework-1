@@ -147,23 +147,12 @@ app.get('/audio-features', function (request, response) {
 
 app.get('/artist', function (request, response) {
   
-  // Get information about an artist
-  spotifyApi.getArtist('6jJ0s89eD6GaHleKKya26X')
-    .then(function(data) {
-    
-      // Send the list of tracks
-      response.send(data.body);
-    
-    }, function(err) {
-      console.error(err);
-    });
-  
-  // Build a collection of tracks
+  // Build a collection of artists
   let artists = [{id:"6jJ0s89eD6GaHleKKya26X"}, 
                  {id:"1EowJ1WwkMzkCkRomFhui7"}];
     // Get data
   artists.forEach((artist) => {
-    spotifyApi.getAudioFeaturesForTrack(`${artist.id}`)
+    spotifyApi.getArtist(`${artist.id}`)
       .then((data) => {
         // Persist the data on this  object
         artist.data = data.body;
@@ -186,17 +175,32 @@ app.get('/artist', function (request, response) {
 });
 
 app.get('/artist-top-tracks', function (request, response) {
-  
-  // Get an artist's top tracks in a country
-  spotifyApi.getArtistTopTracks('0LcJLqbBmaGUft1e9Mm8HV', 'SE')
-    .then(function(data) {
-    
-      // Send the list of tracks
-      response.send(data.body.tracks);
-    
+   
+  // Build a collection of artists
+  let artists = [{id:"0LcJLqbBmaGUft1e9Mm8HV",country:"SE"}, 
+                 {id:"1EowJ1WwkMzkCkRomFhui7",country:"JP"}];
+    // Get data
+  artists.forEach((artist) => {
+    spotifyApi.getArtistTopTracks(`${artist.id}`, `${artist.country}`)
+      .then((data) => {
+        // Persist the data on this  object
+        artist.data = data.body;
     }, function(err) {
       console.error(err);
     });
+  });
+  
+  let check = () => {
+    if (artists.filter(track => track.data !== undefined).length 
+    !== artists.length) {
+      setTimeout(check, 500);
+    } else {
+      response.send(artists);
+    }
+  }
+  
+  // Call check so we don't send a response until we have all the data back
+  check();
 });
 
 

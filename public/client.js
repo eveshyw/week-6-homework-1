@@ -90,10 +90,10 @@ document.addEventListener('DOMContentLoaded',function() {
         artistContainer.insertAdjacentHTML('beforeend', `<img class="circle-image" src="${artist.data.images[0].url}"/>`);
 
         // Display the artist name
-        artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}</h3>`);
+        artistContainer.insertAdjacentHTML('beforeend', `<h3>${artist.data.name}</h3>`);
 
         // Display the artist's genres
-        data.genres.map(function(genre, i) {
+        artist.data.genres.map(function(genre, i) {
           artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}</p>`);
     });
     })
@@ -106,11 +106,15 @@ document.addEventListener('DOMContentLoaded',function() {
     console.groupEnd();
     
     const topTracksContainer = document.getElementById("top-tracks-container");
+    data
+      .forEach((artist) => {
+        // Display the top tracks
+        artist.data.tracks.map(function(track, i) {
+          artistContainer.insertAdjacentHTML('beforeend', `<h3>${artist.data.name}</h3>`);
+          topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }</li>`);
+        });
+    })
     
-    // Display the audio features
-    data.map(function(track, i) {
-      topTracksContainer.insertAdjacentHTML('beforeend', `<li>${track.name }</li>`);
-    });
   });
 
 });
