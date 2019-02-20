@@ -49,7 +49,7 @@ spotifyApi.clientCredentialsGrant()
 app.get('/search-track', function (request, response) {
   // Build a collection of tracks
   let tracks = [{name:"proud of u"}, {name:"bartender"}];
-    // Get the playlists for the given category for each country
+    // Get the data
   tracks.forEach((track) => {
     spotifyApi.searchTracks(`track:${track.name}`, {limit: 1})
       .then((data) => {
@@ -60,9 +60,6 @@ app.get('/search-track', function (request, response) {
     });
   });
   
-  // Check will see if we have .data on all the country objects
-  // which indicates all requests have returned successfully.
-  // If the lengths don't match then we call check again in 500ms
   let check = () => {
     if (tracks.filter(track => track.data !== undefined).length 
     !== tracks.length) {
@@ -106,9 +103,6 @@ app.get('/category-playlists', function (request, response) {
     });
   });
   
-  // Check will see if we have .data on all the country objects
-  // which indicates all requests have returned successfully.
-  // If the lengths don't match then we call check again in 500ms
   let check = () => {
     if (countries.filter(c => c.data !== undefined).length 
     !== countries.length) {
@@ -124,20 +118,10 @@ app.get('/category-playlists', function (request, response) {
 
 app.get('/audio-features', function (request, response) {
   
-//   // Get the audio features for a track ID
-//   spotifyApi.getAudioFeaturesForTrack('4uLU6hMCjMI75M1A2tKUQC')
-//     .then(function(data) {
-    
-//       //Send the audio features object
-//       response.send(data.body);
-    
-//     }, function(err) {
-//       console.error(err);
-//     });
-  
   // Build a collection of tracks
-  let tracks = [{id:"4uLU6hMCjMI75M1A2tKUQC"}, {id:"250RLekaiL1q9qZer975Eg"}];
-    // Get the playlists for the given category for each country
+  let tracks = [{id:"4uLU6hMCjMI75M1A2tKUQC",name:"Never Gonna Give You Up"}, 
+                 {id:"250RLekaiL1q9qZer975Eg", name:"If We Were Vampires"}];
+    // Get data
   tracks.forEach((track) => {
     spotifyApi.getAudioFeaturesForTrack(`${track.id}`)
       .then((data) => {
@@ -148,9 +132,6 @@ app.get('/audio-features', function (request, response) {
     });
   });
   
-  // Check will see if we have .data on all the country objects
-  // which indicates all requests have returned successfully.
-  // If the lengths don't match then we call check again in 500ms
   let check = () => {
     if (tracks.filter(track => track.data !== undefined).length 
     !== tracks.length) {
@@ -176,6 +157,32 @@ app.get('/artist', function (request, response) {
     }, function(err) {
       console.error(err);
     });
+  
+  // Build a collection of tracks
+  let artists = [{id:"6jJ0s89eD6GaHleKKya26X"}, 
+                 {id:"1EowJ1WwkMzkCkRomFhui7"}];
+    // Get data
+  artists.forEach((artist) => {
+    spotifyApi.getAudioFeaturesForTrack(`${artist.id}`)
+      .then((data) => {
+        // Persist the data on this  object
+        artist.data = data.body;
+    }, function(err) {
+      console.error(err);
+    });
+  });
+  
+  let check = () => {
+    if (artists.filter(track => track.data !== undefined).length 
+    !== artists.length) {
+      setTimeout(check, 500);
+    } else {
+      response.send(artists);
+    }
+  }
+  
+  // Call check so we don't send a response until we have all the data back
+  check();
 });
 
 app.get('/artist-top-tracks', function (request, response) {

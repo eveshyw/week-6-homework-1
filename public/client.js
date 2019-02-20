@@ -64,14 +64,16 @@ document.addEventListener('DOMContentLoaded',function() {
     var keys = ["danceability", "energy", "acousticness", "speechiness", "loudness"]
     
     data
-      .forEach((c) => {})
+      .forEach((t) => {
+        audioFeaturesContainer.insertAdjacentHTML('beforeend', `<br><h1>${t.name}</h1><br>`);
+        // Display the audio features
+        keys.map(function(key, i) {
+          if (t.data.hasOwnProperty(key)) {
+            audioFeaturesContainer.insertAdjacentHTML('beforeend', `<p><span class="big-number"> ${t.data[key]} </span> ${key}</p>`);
+          }
+        });
+    })
     
-    // Display the audio features
-    keys.map(function(key, i) {
-      if (data.hasOwnProperty(key)) {
-        audioFeaturesContainer.insertAdjacentHTML('beforeend', `<p><span class="big-number"> ${data[key]} </span> ${key}</p>`);
-      }
-    });
   });
   
   fetch('/artist').then(resp => resp.json()).then((data) => {
@@ -82,16 +84,19 @@ document.addEventListener('DOMContentLoaded',function() {
     
     const artistContainer = document.getElementById("artist-container");
     
-    // Display the artist image
-    artistContainer.insertAdjacentHTML('beforeend', `<img class="circle-image" src="${data.images[0].url}"/>`);
-    
-    // Display the artist name
-    artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}</h3>`);
-    
-    // Display the artist's genres
-    data.genres.map(function(genre, i) {
-      artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}</p>`);
+    data
+      .forEach((artist) => {
+        // Display the artist image
+        artistContainer.insertAdjacentHTML('beforeend', `<img class="circle-image" src="${artist.data.images[0].url}"/>`);
+
+        // Display the artist name
+        artistContainer.insertAdjacentHTML('beforeend', `<h3>${data.name}</h3>`);
+
+        // Display the artist's genres
+        data.genres.map(function(genre, i) {
+          artistContainer.insertAdjacentHTML('beforeend', `<p>${genre}</p>`);
     });
+    })
   });
   
   fetch('/artist-top-tracks').then(resp => resp.json()).then((data) => {
