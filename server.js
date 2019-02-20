@@ -75,17 +75,6 @@ app.get('/search-track', function (request, response) {
   // Call check so we don't send a response until we have all the data back
   check();
   
-  
-  // Search for a track!
-//   spotifyApi.searchTracks(`track:proud of u`, {limit: 1})
-//     .then(function(data) {
-    
-//       // Send the first (only) track object
-//       response.send(data.body.tracks.items[0]);
-    
-//     }, function(err) {
-//       console.error(err);
-//     });
 });
 
 app.get('/category-playlists', function (request, response) {
@@ -135,16 +124,44 @@ app.get('/category-playlists', function (request, response) {
 
 app.get('/audio-features', function (request, response) {
   
-  // Get the audio features for a track ID
-  spotifyApi.getAudioFeaturesForTrack('4uLU6hMCjMI75M1A2tKUQC')
-    .then(function(data) {
+//   // Get the audio features for a track ID
+//   spotifyApi.getAudioFeaturesForTrack('4uLU6hMCjMI75M1A2tKUQC')
+//     .then(function(data) {
     
-      //Send the audio features object
-      response.send(data.body);
+//       //Send the audio features object
+//       response.send(data.body);
     
+//     }, function(err) {
+//       console.error(err);
+//     });
+  
+  // Build a collection of tracks
+  let tracks = [{id:"4uLU6hMCjMI75M1A2tKUQC"}, {id:"250RLekaiL1q9qZer975Eg"}];
+    // Get the playlists for the given category for each country
+  tracks.forEach((track) => {
+    spotifyApi.getAudioFeaturesForTrack(`${track.id}`)
+      .then((data) => {
+        // Persist the data on this  object
+        track.data = data.body;
     }, function(err) {
       console.error(err);
     });
+  });
+  
+  // Check will see if we have .data on all the country objects
+  // which indicates all requests have returned successfully.
+  // If the lengths don't match then we call check again in 500ms
+  let check = () => {
+    if (tracks.filter(track => track.data !== undefined).length 
+    !== tracks.length) {
+      setTimeout(check, 500);
+    } else {
+      response.send(tracks);
+    }
+  }
+  
+  // Call check so we don't send a response until we have all the data back
+  check();
 });
 
 app.get('/artist', function (request, response) {

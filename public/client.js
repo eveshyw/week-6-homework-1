@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded',function() {
         // Display the artist name
         var artists = '';
 
-        t.artists.forEach(function(item) {
+        t.data.tracks.items[0].artists.forEach(function(item) {
           artists = artists + item.name + ' ';
         });
 
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded',function() {
         searchTrackContainer.append(h5);
 
         // Display the album art
-        searchTrackContainer.insertAdjacentHTML('beforeend', `<img src="${t.data.album.images[0].url}"/>`);
+        searchTrackContainer.insertAdjacentHTML('beforeend', `<img src="${t.data.tracks.items[0].album.images[0].url}"/>`);
       })
   
 
@@ -62,6 +62,9 @@ document.addEventListener('DOMContentLoaded',function() {
     
     // The audio features we want to show
     var keys = ["danceability", "energy", "acousticness", "speechiness", "loudness"]
+    
+    data
+      .forEach((c) => {})
     
     // Display the audio features
     keys.map(function(key, i) {
